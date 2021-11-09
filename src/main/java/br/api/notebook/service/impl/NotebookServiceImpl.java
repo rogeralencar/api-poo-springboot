@@ -24,10 +24,7 @@ public class NotebookServiceImpl implements NotebookService {
         NotebookDTO noteDTO = new NotebookDTO();
         noteDTO.setBrand(noteEntity.getBrand());
         noteDTO.setModel(noteEntity.getModel());
-        noteDTO.setRam(noteEntity.getRam());
-        noteDTO.setHd(noteEntity.getHd());
-        noteDTO.setProcessor(noteEntity.getProcessor());
-        noteDTO.setScreen(noteEntity.getScreen());
+        noteDTO.setDescription(noteEntity.getDescription());
         noteDTO.setPrice(noteEntity.getPrice());
         return noteDTO;
     }

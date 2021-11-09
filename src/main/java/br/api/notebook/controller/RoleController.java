@@ -18,13 +18,14 @@ public class RoleController {
     }
 
     @PostMapping("/role/save")
-    public ResponseEntity<RoleEntity> saveRole(@RequestBody RoleEntity roleEntity){
-        return ResponseEntity.ok().body(roleService.saveRole(roleEntity));
+    public ResponseEntity<String> saveRole(@RequestBody RoleEntity roleEntity){
+        roleService.saveRole(roleEntity);
+        return ResponseEntity.ok().body("Cargo adicionado com sucesso");
     }
 
     @PutMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUser form){
+    public ResponseEntity<String> addRoleToUser(@RequestBody RoleToUser form){
         roleService.addRoleToUser(form.getUsername(), form.getRoleName());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Cargo atribuído com sucesso ao usuário: " + form.getUsername());
     }
 }

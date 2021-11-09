@@ -31,8 +31,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserEntity> saveUser(@RequestBody UserEntity userEntity){
-        return ResponseEntity.ok().body(userService.saveUser(userEntity));
+    public ResponseEntity<String> saveUser(@RequestBody UserEntity userEntity){
+        userService.saveUser(userEntity);
+        return ResponseEntity.ok().body("Cadastrado com Sucesso!");
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})

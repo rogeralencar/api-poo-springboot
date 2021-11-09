@@ -3,10 +3,7 @@ package br.api.notebook.dto;
 public class NotebookDTO {
     private String brand;
     private String model;
-    private String ram;
-    private String hd;
-    private String processor;
-    private float screen;
+    private String description;
     private float price;
 
     public String getBrand() {
@@ -25,36 +22,12 @@ public class NotebookDTO {
         this.model = model;
     }
 
-    public String getRam() {
-        return ram;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRam(String ram) {
-        this.ram = ram;
-    }
-
-    public String getHd() {
-        return hd;
-    }
-
-    public void setHd(String hd) {
-        this.hd = hd;
-    }
-
-    public String getProcessor() {
-        return processor;
-    }
-
-    public void setProcessor(String processor) {
-        this.processor = processor;
-    }
-
-    public float getScreen() {
-        return screen;
-    }
-
-    public void setScreen(float screen) {
-        this.screen = screen;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getPrice() {

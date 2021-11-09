@@ -8,9 +8,9 @@ public class NotebookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String brand;
     private String model;
+    private String description;
     private String ram;
     private String hd;
     private String processor;
@@ -39,6 +39,14 @@ public class NotebookEntity {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getRam() {
