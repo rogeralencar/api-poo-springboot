@@ -1,8 +1,5 @@
 package br.api.notebook.model;
 
-import br.api.notebook.dto.AddressDTO;
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,21 +17,18 @@ public class UserEntity {
     private String password;
     private int age;
     private Long cpf;
-    private String cep;
 
     @ManyToMany(fetch = EAGER)
-    @ColumnDefault("ROLE_USER")
     private Collection<RoleEntity> roleEntities = new ArrayList<>();
 
     @OneToOne(fetch = EAGER)
     private AddressEntity address;
 
-    public UserEntity(String name, String email, String password, int age, Long cpf,Collection<RoleEntity> roleEntities) {
+    public UserEntity(String name, String email, String password, int age, Collection<RoleEntity> roleEntities) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
-        this.cpf = cpf;
         this.roleEntities = roleEntities;
     }
 
@@ -106,11 +100,4 @@ public class UserEntity {
         this.address = address;
     }
 
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
 }

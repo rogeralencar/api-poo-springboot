@@ -17,6 +17,21 @@ public class NotebookEntity {
     private float screen;
     private float price;
 
+    public NotebookEntity(String brand, String model, String description, String ram, String hd, String processor, float screen, float price) {
+        this.brand = brand;
+        this.model = model;
+        this.description = description;
+        this.ram = ram;
+        this.hd = hd;
+        this.processor = processor;
+        this.screen = screen;
+        this.price = price;
+    }
+
+    public NotebookEntity() {
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -89,3 +104,4 @@ public class NotebookEntity {
         this.price = price;
     }
 }
+

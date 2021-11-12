@@ -1,12 +1,8 @@
 package br.api.notebook.service.impl;
 
 import br.api.notebook.dto.UserDTO;
-import br.api.notebook.model.AddressEntity;
-import br.api.notebook.model.RoleEntity;
 import br.api.notebook.model.UserEntity;
-import br.api.notebook.repository.RoleRepository;
 import br.api.notebook.repository.UserRepository;
-import br.api.notebook.service.AddressService;
 import br.api.notebook.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -21,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,18 +29,13 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepo;
-    private final RoleRepository roleRepo;
-    private final AddressService addressService;
 
     private final PasswordEncoder passwordEncoder;
     private final HttpServletRequest request;
 
-    public UserServiceImpl(UserRepository userRepo, RoleRepository roleRepo,
-                           AddressService addressService, PasswordEncoder passwordEncoder,
+    public UserServiceImpl(UserRepository userRepo, PasswordEncoder passwordEncoder,
                            HttpServletRequest request) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
-        this.addressService = addressService;
         this.passwordEncoder = passwordEncoder;
         this.request = request;
     }
@@ -55,16 +45,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserEntity userEntity = userRepo.findByEmail(email);
         if(userEntity == null){
             throw new UsernameNotFoundException("Usuário não encontrado");
-        } else {
-            System.out.println("Usuário encontrado");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         userEntity.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
-
         return new org.springframework.security.core.userdetails.User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 
-    private UserDTO convertEntityToDto(UserEntity userEntity){
+    @Override
+    public UserDTO convertEntityToDTO(UserEntity userEntity){
         UserDTO userDTO = new UserDTO();
         userDTO.setName(userEntity.getName());
         userDTO.setEmail(userEntity.getEmail());
@@ -78,24 +66,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<UserDTO> getUsers() {
         return userRepo.findAll()
                 .stream()
-                .map(this::convertEntityToDto)
+                .map(this::convertEntityToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserEntity> getUserById(Long id) {
-        return userRepo.findById(id);
+    public UserEntity getUserById(Long id) {
+        Optional<UserEntity> userEntity = userRepo.findById(id);
+        UserEntity user = new UserEntity();
+        if(userEntity.isPresent()){
+            user = userEntity.get();
+        }
+        return user;
     }
 
     @Override
-    public UserEntity saveUser(UserEntity userEntity) throws IOException {
-        Collection<RoleEntity> role = new ArrayList<>();
-        RoleEntity roleEntity = roleRepo.findByName("ROLE_USER");
-        AddressEntity addressEntity = addressService.saveAddress(userEntity.getCep());
-        role.add(roleEntity);
+    public UserEntity saveUser(UserEntity userEntity) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        userEntity.setRoles(role);
-        userEntity.setAddress(addressEntity);
         return userRepo.save(userEntity);
     }
 
