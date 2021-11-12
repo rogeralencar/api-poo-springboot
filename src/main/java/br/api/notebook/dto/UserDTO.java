@@ -8,10 +8,10 @@ public class UserDTO {
     private String name;
     private String email;
     private int age;
-    private Long cpf;
+    private String cpf;
     private Collection<RoleEntity> roles;
 
-    public UserDTO(String name, String email, int age, Long cpf, Collection<RoleEntity> roles) {
+    public UserDTO(String name, String email, int age, String cpf, Collection<RoleEntity> roles) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -47,11 +47,11 @@ public class UserDTO {
         this.age = age;
     }
 
-    public long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

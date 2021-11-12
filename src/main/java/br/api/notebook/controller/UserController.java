@@ -2,6 +2,7 @@ package br.api.notebook.controller;
 
 import br.api.notebook.dto.UserDTO;
 import br.api.notebook.model.UserEntity;
+import br.api.notebook.security.CpfValidator;
 import br.api.notebook.security.PasswordAndEmailValidator;
 import br.api.notebook.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final PasswordAndEmailValidator validator = new PasswordAndEmailValidator();
+    private final CpfValidator validatorCpf = new CpfValidator();
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -36,8 +38,12 @@ public class UserController {
     public ResponseEntity<String> saveUser(@RequestBody UserEntity userEntity) throws IOException {
         if(validator.isValidPassword(userEntity.getPassword())) {
             if(validator.isValidEmail(userEntity.getEmail())) {
-                userService.saveUser(userEntity);
-                return ResponseEntity.ok().body("Cadastrado com Sucesso!");
+                if(validatorCpf.isCpfValid(userEntity.getCpf())){
+                    userService.saveUser(userEntity);
+                    return ResponseEntity.ok().body("Cadastrado com Sucesso!");
+                } else{
+                    return ResponseEntity.badRequest().body("Seu Cpf deve estar no padrão 000.000.000-00 ou 00000000000");
+                }
             } else {
                 return ResponseEntity.badRequest().body("Seu email deve conter: \n - @; \n - Um domínio. Ex: .com; \n" +
                         " - Não ter caracteres especiais; \n - E não deve conter espaços.");

@@ -16,7 +16,7 @@ public class UserEntity {
     private String email;
     private String password;
     private int age;
-    private Long cpf;
+    private String cpf;
 
     @ManyToMany(fetch = EAGER)
     private Collection<RoleEntity> roleEntities = new ArrayList<>();
@@ -76,11 +76,11 @@ public class UserEntity {
         this.age = age;
     }
 
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
