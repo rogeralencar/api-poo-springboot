@@ -14,12 +14,12 @@ public class RoleEntity {
 
     private String name;
 
-    public RoleEntity(String name) {
-        this.name = name;
-    }
-
     public RoleEntity(){
 
+    }
+
+    public RoleEntity(String name) {
+        this.name = name;
     }
 
     public Long getId() {

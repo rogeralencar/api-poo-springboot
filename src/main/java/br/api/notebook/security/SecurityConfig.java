@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -44,10 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/signup").permitAll();
         http.authorizeRequests().antMatchers("/role/**").permitAll();
         http.authorizeRequests().antMatchers("/notes", "/notes/**").permitAll();
+        http.authorizeRequests().antMatchers("/cart/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.logout().clearAuthentication(true).logoutUrl("/logout").permitAll();
     }
 
     @Bean

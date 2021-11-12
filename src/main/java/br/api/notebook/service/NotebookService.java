@@ -12,4 +12,5 @@ public interface NotebookService {
     Optional<NotebookEntity> getNoteById(Long id);
     NotebookEntity updateNote(NotebookEntity noteEntity);
     void deleteNote(Long id);
+    NotebookEntity getById(Long id);
 }

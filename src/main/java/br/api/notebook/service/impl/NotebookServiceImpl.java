@@ -56,4 +56,9 @@ public class NotebookServiceImpl implements NotebookService {
     public void deleteNote(Long id) {
         notebookRepo.deleteById(id);
     }
+
+    @Override
+    public NotebookEntity getById(Long id) {
+        return notebookRepo.getById(id);
+    }
 }

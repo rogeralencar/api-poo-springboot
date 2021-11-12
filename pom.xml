@@ -63,8 +63,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.gilberto-torrezan/viacep -->
+        <dependency>
+            <groupId>com.github.gilberto-torrezan</groupId>
+            <artifactId>viacep</artifactId>
+            <version>1.2.0</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
