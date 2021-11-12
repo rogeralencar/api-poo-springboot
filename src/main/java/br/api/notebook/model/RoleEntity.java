@@ -14,6 +14,11 @@ public class RoleEntity {
 
     private String name;
 
+    public RoleEntity(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public RoleEntity(){
 
     }

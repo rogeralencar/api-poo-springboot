@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -29,7 +28,7 @@ public class UserController {
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/users/{id}")
-    public ResponseEntity<Optional<UserEntity>> getUsers(@PathVariable Long id){
+    public ResponseEntity<UserEntity> getUsers(@PathVariable Long id){
         return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
