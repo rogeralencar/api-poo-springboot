@@ -1,13 +1,6 @@
 package br.api.notebook.model;
 
-import javax.persistence.*;
-
-@Entity
-public class AddressEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class AddressEntityBuilder {
     private String cep;
     private String street;
     private String district;
@@ -17,24 +10,40 @@ public class AddressEntity {
 
 
 
-    public AddressEntity() {
-    }
-
-    public AddressEntity(String cep, String street, String district, String city, String state, Long idUser) {
+    public AddressEntityBuilder withCep (String cep){
         this.cep = cep;
+        return this;
+    }
+
+    public AddressEntityBuilder withStreet (String street){
         this.street = street;
+        return this;
+    }
+
+    public AddressEntityBuilder withDistrict (String district){
         this.district = district;
+        return this;
+    }
+
+    public AddressEntityBuilder withCity(String city){
         this.city = city;
+        return this;
+    }
+
+    public AddressEntityBuilder withState(String state){
         this.state = state;
+        return this;
+    }
+
+    public AddressEntityBuilder withIdUser(Long idUser){
         this.idUser = idUser;
+        return this;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public AddressEntity build(){
+        AddressEntity address = new AddressEntity(cep, street, district, city, state, idUser);
 
-    public void setId(Long id) {
-        this.id = id;
+        return address;
     }
 
     public String getCep() {

@@ -2,6 +2,7 @@ package br.api.notebook.service.impl;
 
 import br.api.notebook.dto.AddressDTO;
 import br.api.notebook.model.AddressEntity;
+import br.api.notebook.model.AddressEntityBuilder;
 import br.api.notebook.model.UserEntity;
 import br.api.notebook.repository.AddressRepository;
 import br.api.notebook.service.AddressService;
@@ -29,15 +30,19 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressEntity saveAddress(String cep, Long id) throws IOException {
         UserEntity user = userService.getUserById(id);
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setCity(viaCEP.getEndereco(cep).getLocalidade());
-        addressEntity.setDistrict(viaCEP.getEndereco(cep).getBairro());
-        addressEntity.setState(viaCEP.getEndereco(cep).getUf());
-        addressEntity.setStreet(viaCEP.getEndereco(cep).getLogradouro());
-        addressEntity.setCep(cep);
-        addressEntity.setIdUser(id);
+        AddressEntityBuilder builder = new AddressEntityBuilder();
+        AddressEntity addressEntity = builder.withCity(viaCEP.getEndereco(cep).getLocalidade())
+                .withDistrict(viaCEP.getEndereco(cep).getBairro())
+                .withState(viaCEP.getEndereco(cep).getUf())
+                .withStreet(viaCEP.getEndereco(cep).getLogradouro())
+                .withCep(cep)
+                .withIdUser(id)
+                .build();
         user.setAddress(addressEntity);
-        return addressRepo.save(addressEntity);
+        addressRepo.save(addressEntity);
+        userService.saveUser(user);
+        return addressEntity;
+
     }
 
     @Override
