@@ -8,7 +8,7 @@ Repositório dedicado para o trabalho de Programação Orientada a Objetos
 | Marcus Vinícius Nóbrega Santos | 2122130031 |
 | Roger dos Santos de Alencar | 2022130015 |
 
-## Requisitos
+## Informações
 
-- PostgreSQL 12+.
-- Criação de um SCHEMA chamado `note` ou altere o nome do mesmo no arquivo de configurações `application.properties`
+- Heroku: https://notebook-projeto.herokuapp.com/
+- Documentação: https://docs.google.com/document/d/19Nh00ee9y_ynP2uF63Vb19_whw6mNIUvc2KfEM7yBaw/edit?usp=sharing
