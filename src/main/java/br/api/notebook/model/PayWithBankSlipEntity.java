@@ -10,13 +10,13 @@ import java.util.Random;
 @Entity
 public class PayWithBankSlipEntity extends PaymentEntity{
     private String BankSlipCode;
-    private Date date;
+    private String date;
 
     @Override
     public void addKey() {
         setBankSlipCode("03399.69925 58700.001801 85108.0010188 74650000010000");
         setName("Boleto Bancário");
-        setDate(new Date());
+        setDate("30/11/2021");
     }
 
     public PayWithBankSlipEntity(){
@@ -31,11 +31,11 @@ public class PayWithBankSlipEntity extends PaymentEntity{
         BankSlipCode = bankSlipCode;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
