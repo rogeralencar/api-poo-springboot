@@ -20,15 +20,6 @@ public class NotebookServiceImpl implements NotebookService {
         this.notebookRepo = notebookRepo;
     }
 
-    private NotebookDTO convertEntityToDto(NotebookEntity noteEntity){
-        NotebookDTO noteDTO = new NotebookDTO();
-        noteDTO.setBrand(noteEntity.getBrand());
-        noteDTO.setModel(noteEntity.getModel());
-        noteDTO.setDescription(noteEntity.getDescription());
-        noteDTO.setPrice(noteEntity.getPrice());
-        return noteDTO;
-    }
-
     @Override
     public List<NotebookDTO> getNotes() {
         return notebookRepo.findAll()
@@ -43,13 +34,46 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
+    public NotebookEntity getById(Long id) {
+        return notebookRepo.getById(id);
+    }
+
+    @Override
     public NotebookEntity saveNote(NotebookEntity noteEntity) {
         return notebookRepo.save(noteEntity);
     }
 
     @Override
-    public NotebookEntity updateNote(NotebookEntity noteEntity) {
-        return notebookRepo.save(noteEntity);
+    public void updateNote(NotebookEntity noteEntity, Long id) {
+        Optional<NotebookEntity> note = notebookRepo.findById(id);
+        if(note.isPresent()) {
+            NotebookEntity n = note.get();
+            if (!(noteEntity.getBrand() == null)) {
+                n.setBrand(noteEntity.getBrand());
+            }
+            if (!(noteEntity.getModel() == null)) {
+                n.setModel(noteEntity.getModel());
+            }
+            if (!(noteEntity.getDescription() == null)) {
+                n.setDescription(noteEntity.getDescription());
+            }
+            if (!(noteEntity.getRam() == null)) {
+                n.setRam(noteEntity.getRam());
+            }
+            if (!(noteEntity.getHd() == null)) {
+                n.setHd(noteEntity.getHd());
+            }
+            if (!(noteEntity.getProcessor() == null)) {
+                n.setProcessor(noteEntity.getProcessor());
+            }
+            if (!(noteEntity.getScreen() == 0.0)) {
+                n.setScreen(noteEntity.getScreen());
+            }
+            if (!(noteEntity.getPrice() == 0.0)) {
+                n.setPrice(noteEntity.getPrice());
+            }
+        notebookRepo.save(n);
+        }
     }
 
     @Override
@@ -57,8 +81,12 @@ public class NotebookServiceImpl implements NotebookService {
         notebookRepo.deleteById(id);
     }
 
-    @Override
-    public NotebookEntity getById(Long id) {
-        return notebookRepo.getById(id);
+    private NotebookDTO convertEntityToDto(NotebookEntity noteEntity){
+        NotebookDTO noteDTO = new NotebookDTO();
+        noteDTO.setBrand(noteEntity.getBrand());
+        noteDTO.setModel(noteEntity.getModel());
+        noteDTO.setDescription(noteEntity.getDescription());
+        noteDTO.setPrice(noteEntity.getPrice());
+        return noteDTO;
     }
 }

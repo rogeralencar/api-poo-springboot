@@ -30,7 +30,8 @@ public class OrderController {
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @DeleteMapping("/order/delete/{id}")
-    public void deleteOrder(@PathVariable Long id){
+    public ResponseEntity<String> deleteOrder(@PathVariable Long id){
         orderService.deleteOrder(id);
+        return ResponseEntity.ok().body("Pedido cancelado.");
     }
 }

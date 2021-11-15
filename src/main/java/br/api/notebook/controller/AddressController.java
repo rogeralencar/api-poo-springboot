@@ -25,7 +25,7 @@ public class AddressController {
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PostMapping("/address/save")
     public AddressEntity saveAddress(@RequestBody AddressDTO address) throws IOException {
-        return addressService.saveAddress(address.getCep());
+        return addressService.saveAddress(address.getCep(), address.getNumber());
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})

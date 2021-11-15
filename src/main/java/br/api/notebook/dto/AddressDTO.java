@@ -6,6 +6,7 @@ public class AddressDTO {
     private String city;
     private String state;
     private String cep;
+    private int number;
 
     public String getStreet() {
         return street;
@@ -45,5 +46,13 @@ public class AddressDTO {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

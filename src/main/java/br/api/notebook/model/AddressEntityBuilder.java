@@ -7,6 +7,7 @@ public class AddressEntityBuilder {
     private String district;
     private String city;
     private String state;
+    private int number;
 
     public AddressEntityBuilder withId(Long id) {
         this.id = id;
@@ -38,8 +39,13 @@ public class AddressEntityBuilder {
         return this;
     }
 
+    public AddressEntityBuilder withNumber(int number) {
+        this.number = number;
+        return this;
+    }
+
     public AddressEntity build() {
-        AddressEntity address = new AddressEntity(id, cep, street, district, city, state);
+        AddressEntity address = new AddressEntity(id, cep, street, district, city, state, number);
 
         return address;
     }
@@ -90,5 +96,13 @@ public class AddressEntityBuilder {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

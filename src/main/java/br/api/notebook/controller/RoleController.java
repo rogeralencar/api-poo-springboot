@@ -27,8 +27,8 @@ public class RoleController {
 
     @Secured({"ROLE_ADMIN"})
     @PutMapping("/role/addtouser")
-    public ResponseEntity<String> addRoleToUser(@RequestBody RoleToUser form){
-        roleService.addRoleToUser(form.getUsername(), form.getRoleName());
-        return ResponseEntity.ok().body("Cargo atribuído com sucesso ao usuário: " + form.getUsername());
+    public ResponseEntity<String> addRoleToUser(@RequestBody RoleToUser role){
+        roleService.addRoleToUser(role.getEmail(), role.getRoleName());
+        return ResponseEntity.ok().body("Cargo atribuído com sucesso ao usuário: " + role.getEmail());
     }
 }

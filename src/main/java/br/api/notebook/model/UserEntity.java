@@ -18,7 +18,7 @@ public class UserEntity {
     private int age;
     private String cpf;
 
-    @ManyToMany(fetch = EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = EAGER, cascade = CascadeType.DETACH)
     private Collection<RoleEntity> roleEntities = new ArrayList<>();
 
     @OneToOne(fetch = EAGER, cascade = CascadeType.ALL)

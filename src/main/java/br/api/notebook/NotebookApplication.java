@@ -34,7 +34,7 @@ public class NotebookApplication  {
             roleService.saveRole(new RoleEntity(null, "ROLE_ADMIN"));
             roleService.saveRole(new RoleEntity(null, "ROLE_USER"));
 
-            userService.saveUser(new UserEntity("Roger User", "rogerU@gmail.com", "admin@1A", 18, new ArrayList<>(), null));
+            userService.saveUser(new UserEntity("Roger User", "rogerU@gmail.com", "adminA1@", 18, new ArrayList<>(), null));
 
             roleService.addRoleToUser("rogerU@gmail.com", "ROLE_ADMIN");
 

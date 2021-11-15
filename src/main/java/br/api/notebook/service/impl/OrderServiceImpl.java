@@ -61,13 +61,12 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.deleteById(id);
     }
 
-    @Override
-    public OrderDTO convertEntityToDTO(OrderEntity orderEntity) {
+    private OrderDTO convertEntityToDTO(OrderEntity orderEntity) {
         OrderDTO orderDTO = new OrderDTO();
-        UserEntity user = orderEntity.getUser();
-        orderDTO.setUser(userService.convertEntityToDTO(user));
-        orderDTO.setAddress(addressService.convertEntityToDto(orderEntity.getAddress()));
-        orderDTO.setCart(orderEntity.getCart());
+        UserEntity user = userService.findByEmail();
+        orderDTO.setUser(userService.getUserDto(user));
+        orderDTO.setAddress(addressService.getAddressDto(orderEntity.getAddress()));
+        orderDTO.setCart(cartService.listItems(user));
         orderDTO.setPay(orderEntity.getPay());
         return orderDTO;
     }

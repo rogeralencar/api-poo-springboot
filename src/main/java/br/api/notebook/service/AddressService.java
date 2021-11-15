@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
-@Service
 public interface AddressService {
-    AddressEntity saveAddress(String cep) throws IOException;
-    AddressDTO convertEntityToDto(AddressEntity addressEntity);
+    AddressEntity saveAddress(String cep, int number) throws IOException;
+    AddressDTO getAddressDto(AddressEntity addressEntity);
     AddressDTO getByUser();
-    AddressEntity updateAddress(AddressEntity address) throws IOException;
+    AddressEntity updateAddress(AddressEntity addressEntity) throws IOException;
 }

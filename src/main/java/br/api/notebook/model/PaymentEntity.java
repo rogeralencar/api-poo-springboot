@@ -1,5 +1,8 @@
 package br.api.notebook.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -10,6 +13,7 @@ import static javax.persistence.InheritanceType.JOINED;
 public abstract class PaymentEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @JsonIgnore
     private Long id;
     private String name;
 
@@ -17,6 +21,8 @@ public abstract class PaymentEntity {
         this.id = id;
         this.name = name;
     }
+
+    public abstract void addKey();
 
     public PaymentEntity(){
 

@@ -24,10 +24,8 @@ public class CartServiceImpl implements CartService {
         this.cartRepo = cartRepo;
     }
 
-    @Override
-    public void addToCart(AddToCartDTO addToCartDTO, NotebookEntity notebookEntity, UserEntity userEntity) {
-        CartEntity cart = new CartEntity(notebookEntity, userEntity, addToCartDTO.getQuantity());
-        cartRepo.save(cart);
+    public CartEntity getCartByUser(UserEntity user){
+        return cartRepo.findByUser(user);
     }
 
     @Override
@@ -46,6 +44,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void addToCart(AddToCartDTO addToCartDTO, NotebookEntity notebookEntity, UserEntity userEntity) {
+        CartEntity cart = new CartEntity(notebookEntity, userEntity, addToCartDTO.getQuantity());
+        cartRepo.save(cart);
+    }
+
+    @Override
     public void updateItem(AddToCartDTO addToCartDTO, NotebookEntity notebookEntity, UserEntity userEntity) {
         Optional<CartEntity> cartEntity = cartRepo.findById(addToCartDTO.getId());
         if(cartEntity.isPresent()){
@@ -60,9 +64,8 @@ public class CartServiceImpl implements CartService {
         cartRepo.deleteById(id);
     }
 
-    public CartDTO convertEntityToDTO(CartEntity cartEntity){
+    private CartDTO convertEntityToDTO(CartEntity cartEntity){
         CartDTO cartDTO = new CartDTO();
-        cartDTO.setId(cartEntity.getId());
         cartDTO.setQuantity(cartEntity.getQuantity());
         cartDTO.setNotebook(cartEntity.getNotebook());
         return cartDTO;

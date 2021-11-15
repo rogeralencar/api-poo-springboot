@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface UserService {
     void saveUser(UserEntity userEntity) throws IOException;
     List<UserDTO> getUsers();
-    UserEntity updateUser(UserEntity user);
-    void deleteUser(Long id);
     UserEntity findByEmail();
-    String getUserByToken();
-    UserDTO convertEntityToDTO(UserEntity userEntity);
+    Optional<UserEntity> getById(Long id);
+    UserEntity updateUser(UserEntity user);
+    UserDTO getUserDto(UserEntity userEntity);
+    void deleteUser(Long id);
 }

@@ -1,12 +1,23 @@
 package br.api.notebook.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
-import java.sql.Date;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.Random;
 
 @Entity
 public class PayWithBankSlipEntity extends PaymentEntity{
     private String BankSlipCode;
-    private java.sql.Date date;
+    private Date date;
+
+    @Override
+    public void addKey() {
+        setBankSlipCode("03399.69925 58700.001801 85108.0010188 74650000010000");
+        setName("Boleto Bancário");
+        setDate(new Date());
+    }
 
     public PayWithBankSlipEntity(){
         super();

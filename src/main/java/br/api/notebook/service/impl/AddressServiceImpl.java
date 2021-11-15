@@ -26,7 +26,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressEntity saveAddress(String cep) throws IOException {
+    public AddressDTO getByUser(){
+        UserEntity user = userService.findByEmail();
+        AddressEntity address = user.getAddress();
+        return convertEntityToDto(address);
+    }
+
+    @Override
+    public AddressEntity saveAddress(String cep, int number) throws IOException {
         UserEntity user = userService.findByEmail();
         AddressEntityBuilder builder = new AddressEntityBuilder();
         AddressEntity addressEntity = builder.withCity(viaCEP.getEndereco(cep).getLocalidade())
@@ -34,29 +41,12 @@ public class AddressServiceImpl implements AddressService {
                 .withState(viaCEP.getEndereco(cep).getUf())
                 .withStreet(viaCEP.getEndereco(cep).getLogradouro())
                 .withCep(cep)
+                .withNumber(number)
                 .build();
         user.setAddress(addressEntity);
         addressRepo.save(addressEntity);
         userService.saveUser(user);
         return addressEntity;
-    }
-
-    @Override
-    public AddressDTO convertEntityToDto(AddressEntity addressEntity){
-        AddressDTO addressDTO = new AddressDTO();
-        addressDTO.setStreet(addressEntity.getStreet());
-        addressDTO.setDistrict(addressEntity.getDistrict());
-        addressDTO.setCity(addressEntity.getCity());
-        addressDTO.setState(addressEntity.getState());
-        addressDTO.setCep(addressEntity.getCep());
-        return addressDTO;
-    }
-
-    @Override
-    public AddressDTO getByUser(){
-        UserEntity user = userService.findByEmail();
-        AddressEntity address = user.getAddress();
-        return convertEntityToDto(address);
     }
 
     @Override
@@ -70,7 +60,24 @@ public class AddressServiceImpl implements AddressService {
                 .withState(viaCEP.getEndereco(address.getCep()).getUf())
                 .withStreet(viaCEP.getEndereco(address.getCep()).getLogradouro())
                 .withCep(address.getCep())
+                .withNumber(address.getNumber())
                 .build();
         return addressRepo.save(addressEntity);
+    }
+
+    @Override
+    public AddressDTO getAddressDto(AddressEntity addressEntity){
+        return convertEntityToDto(addressEntity);
+    }
+
+    private AddressDTO convertEntityToDto(AddressEntity addressEntity){
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setStreet(addressEntity.getStreet());
+        addressDTO.setDistrict(addressEntity.getDistrict());
+        addressDTO.setCity(addressEntity.getCity());
+        addressDTO.setState(addressEntity.getState());
+        addressDTO.setCep(addressEntity.getCep());
+        addressDTO.setNumber(addressEntity.getNumber());
+        return addressDTO;
     }
 }

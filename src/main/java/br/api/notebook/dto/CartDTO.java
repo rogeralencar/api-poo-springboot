@@ -3,10 +3,7 @@ package br.api.notebook.dto;
 import br.api.notebook.model.NotebookEntity;
 import com.sun.istack.NotNull;
 
-import java.util.List;
-
 public class CartDTO {
-    private Long id;
     @NotNull
     private Long quantity;
     @NotNull
@@ -15,19 +12,10 @@ public class CartDTO {
     @Override
     public String toString(){
         return "'CartDTO'{" +
-                "id = " + id +
                 ", quantity = " + quantity +
                 ", productName = " + notebook.getBrand() +
                 " " + notebook.getModel() +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getQuantity() {

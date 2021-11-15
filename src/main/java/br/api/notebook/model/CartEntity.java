@@ -13,8 +13,10 @@ public class CartEntity {
     private Long id;
     @ManyToOne(fetch = EAGER)
     private NotebookEntity notebook;
+
     @OneToOne(fetch = EAGER)
     private UserEntity user;
+
     private Long quantity;
 
     public CartEntity(NotebookEntity notebook, UserEntity user, Long quantity) {

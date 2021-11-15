@@ -21,6 +21,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -54,21 +55,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO convertEntityToDTO(UserEntity userEntity){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName(userEntity.getName());
-        userDTO.setEmail(userEntity.getEmail());
-        userDTO.setAge(userEntity.getAge());
-        userDTO.setCpf(userEntity.getCpf());
-        return userDTO;
-    }
-
-    @Override
     public List<UserDTO> getUsers() {
         return userRepo.findAll()
                 .stream()
                 .map(this::convertEntityToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO getUserDto(UserEntity userEntity){
+        return convertEntityToDTO(userEntity);
+    }
+
+    @Override
+    public UserEntity findByEmail() {
+        return userRepo.findByEmail(getUserByToken());
+    }
+
+    @Override
+    public Optional<UserEntity> getById(Long id) {
+        return userRepo.findById(id);
     }
 
     @Override
@@ -80,7 +86,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserEntity updateUser(UserEntity userEntity) {
-        return userRepo.save(userEntity);
+        UserEntity user = findByEmail();
+        if(!(userEntity.getName() == null)){
+            user.setName(userEntity.getName());
+        } else if (!(userEntity.getEmail() == null)){
+            user.setEmail(userEntity.getEmail());
+        } else if (!(userEntity.getPassword() == null)){
+            user.setPassword(userEntity.getPassword());
+        } else if (!(userEntity.getPaymentMethod() == null)){
+            user.setPaymentMethod(userEntity.getPaymentMethod());
+        } else if (!(userEntity.getAddress() == null)){
+            user.setAddress(userEntity.getAddress());
+        } else if (!(userEntity.getAge() == 0)){
+            user.setAge(userEntity.getAge());
+        } else if (!(userEntity.getCpf() == null)){
+            user.setCpf(userEntity.getCpf());
+        }
+        return userRepo.save(user);
     }
 
     @Override
@@ -88,18 +110,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepo.deleteById(id);
     }
 
-    @Override
-    public UserEntity findByEmail() {
-        return userRepo.findByEmail(getUserByToken());
-    }
-
-    @Override
-    public String getUserByToken(){
+    private String getUserByToken(){
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         String token = authorizationHeader.substring("Bearer ".length());
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         return decodedJWT.getSubject();
+    }
+
+    private UserDTO convertEntityToDTO(UserEntity userEntity){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName(userEntity.getName());
+        userDTO.setEmail(userEntity.getEmail());
+        userDTO.setAge(userEntity.getAge());
+        userDTO.setCpf(userEntity.getCpf());
+        return userDTO;
     }
 }

@@ -3,7 +3,6 @@ package br.api.notebook.controller;
 import br.api.notebook.dto.NotebookDTO;
 import br.api.notebook.model.NotebookEntity;
 import br.api.notebook.service.NotebookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.Optional;
 
 @RestController
 public class NotebookController {
-    @Autowired
-    private NotebookService notebookService;
+    private final NotebookService notebookService;
+
+    public NotebookController(NotebookService notebookService) {
+        this.notebookService = notebookService;
+    }
 
     @GetMapping("/notes")
     public ResponseEntity<List<NotebookDTO>> getNotebooks() {
@@ -34,9 +36,9 @@ public class NotebookController {
     }
 
     @Secured({"ROLE_ADMIN"})
-    @PutMapping("/note/update")
-    public ResponseEntity<String> updateNote(@RequestBody NotebookEntity noteEntity) {
-        notebookService.updateNote(noteEntity);
+    @PutMapping("/note/update/{id}")
+    public ResponseEntity<String> updateNote(@PathVariable Long id, @RequestBody NotebookEntity noteEntity) {
+        notebookService.updateNote(noteEntity, id);
         return ResponseEntity.ok().body("Notebook atualizado com Sucesso!");
     }
 

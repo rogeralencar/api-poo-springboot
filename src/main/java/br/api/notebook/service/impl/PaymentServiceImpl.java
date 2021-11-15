@@ -3,7 +3,6 @@ package br.api.notebook.service.impl;
 import br.api.notebook.dto.CartItemDTO;
 import br.api.notebook.model.PayWithBankSlipEntity;
 import br.api.notebook.model.PayWithPixEntity;
-import br.api.notebook.model.PaymentEntity;
 import br.api.notebook.model.UserEntity;
 import br.api.notebook.repository.PaymentRepository;
 import br.api.notebook.service.CartService;
@@ -12,8 +11,6 @@ import br.api.notebook.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -32,10 +29,8 @@ public class PaymentServiceImpl implements PaymentService {
     public String savePaymentPix() {
         PayWithPixEntity payment = new PayWithPixEntity();
         UserEntity user = userService.findByEmail();
+        payment.addKey();
         user.setPaymentMethod(null);
-        String key = UUID.randomUUID().toString();
-        payment.setName("Pix");
-        payment.setKeyPix(key);
         user.setPaymentMethod(payment);
         payRepo.save(payment);
         CartItemDTO cart = cartService.listItems(user);
@@ -57,13 +52,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public String savePaymentBankSlip() {
-        PayWithBankSlipEntity payment  = new PayWithBankSlipEntity();
+        PayWithBankSlipEntity payment = new PayWithBankSlipEntity();
         UserEntity user = userService.findByEmail();
-        payment.setName("Boleto Bancário.");
-        payment.setBankSlipCode("03399.69925 58700.001801 85108.0010188 74650000010000");
-        payment.setDate(new java.sql.Date(2021, 11, 30));
-        payRepo.save(payment);
+        payment.addKey();
+        user.setPaymentMethod(null);
         user.setPaymentMethod(payment);
+        payRepo.save(payment);
         CartItemDTO cart = cartService.listItems(user);
         StringBuffer msg = new StringBuffer();
         if (cart.getTotalCost() == 0) {

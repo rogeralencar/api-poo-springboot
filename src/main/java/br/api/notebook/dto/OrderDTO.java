@@ -1,12 +1,11 @@
 package br.api.notebook.dto;
 
-import br.api.notebook.model.CartEntity;
 import br.api.notebook.model.PaymentEntity;
 
 public class OrderDTO {
     private UserDTO user;
     private AddressDTO address;
-    private CartEntity cart;
+    private CartItemDTO cart;
     private PaymentEntity pay;
     
     public UserDTO getUser() {
@@ -25,11 +24,11 @@ public class OrderDTO {
         this.address = address;
     }
 
-    public CartEntity getCart() {
+    public CartItemDTO getCart() {
         return cart;
     }
 
-    public void setCart(CartEntity cart) {
+    public void setCart(CartItemDTO cart) {
         this.cart = cart;
     }
 
