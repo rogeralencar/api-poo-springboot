@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setUser(userService.getUserDto(user));
         orderDTO.setAddress(addressService.getAddressDto(orderEntity.getAddress()));
         orderDTO.setCart(cartService.listItems(user));
-        orderDTO.setPay(orderEntity.getPay());
+        orderDTO.setPay(user.getPaymentMethod());
         return orderDTO;
     }
 }
