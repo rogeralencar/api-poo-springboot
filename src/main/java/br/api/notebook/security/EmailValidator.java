@@ -10,7 +10,7 @@ public class EmailValidator {
     public static final Pattern VALID_EMAIL_ADRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-    public Boolean isValidEmail(String email){
+    public Boolean isEmailValid(String email){
         Matcher matcher = VALID_EMAIL_ADRESS_REGEX.matcher(email);
         return matcher.find();
     }

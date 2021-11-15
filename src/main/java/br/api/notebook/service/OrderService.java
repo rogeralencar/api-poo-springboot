@@ -9,5 +9,4 @@ public interface OrderService {
     List<OrderDTO> getOrder();
     String saveOrder();
     void deleteOrder(Long id);
-    OrderDTO convertEntityToDTO(OrderEntity orderEntity);
 }
