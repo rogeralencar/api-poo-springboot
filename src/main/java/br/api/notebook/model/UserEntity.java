@@ -27,11 +27,12 @@ public class UserEntity {
     @OneToOne(fetch = EAGER, cascade = CascadeType.ALL)
     private PaymentEntity paymentMethod;
 
-    public UserEntity(String name, String email, String password, int age, Collection<RoleEntity> roleEntities, PaymentEntity paymentMethod) {
+    public UserEntity(String name, String email, String password, int age, String cpf,Collection<RoleEntity> roleEntities, PaymentEntity paymentMethod) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
+        this.cpf = cpf;
         this.roleEntities = roleEntities;
         this.paymentMethod = paymentMethod;
     }
