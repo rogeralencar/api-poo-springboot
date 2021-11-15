@@ -34,15 +34,18 @@ public class NotebookApplication  {
             roleService.saveRole(new RoleEntity(null, "ROLE_ADMIN"));
             roleService.saveRole(new RoleEntity(null, "ROLE_USER"));
 
-            userService.saveUser(new UserEntity("Roger User", "rogerU@gmail.com", "adminA1@", 18, new ArrayList<>(), null));
+            userService.saveUser(new UserEntity("Administrator", "adm@gmail.com", "adminA1@", 18, "15464454641", new ArrayList<>(), null));
 
-            roleService.addRoleToUser("rogerU@gmail.com", "ROLE_ADMIN");
+            roleService.addRoleToUser("adm@gmail.com", "ROLE_ADMIN");
 
             notebookService.saveNote(new NotebookEntity("Acer", "Aspire Nitro 5", "Notebook apropriado para jogos e edições de vídeos e imagens!",
                     "8 GB", "1 TB", "Intel i7-11850HQ", 15.7f, 6.599f));
 
-            notebookService.saveNote(new NotebookEntity("Asus", "Predator 5", "Notebook apropriado para jogos e edições de vídeos e imagens!",
+            notebookService.saveNote(new NotebookEntity("Asus", "ROG X5", "Notebook robusto para jogos e edições de vídeos.",
                     "8 GB", "1 TB", "Intel i7-11850HQ", 15.7f, 9.599f));
+
+            notebookService.saveNote(new NotebookEntity("Apple", "Macbook Pro", "Indicado para profissionais.",
+                    "8 GB", "1 TB", "M1 Max", 15.0f, 21.599f));
         };
     }
 }
