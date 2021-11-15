@@ -18,18 +18,22 @@ public class UserEntity {
     private int age;
     private String cpf;
 
-    @ManyToMany(fetch = EAGER)
+    @ManyToMany(fetch = EAGER, cascade = CascadeType.ALL)
     private Collection<RoleEntity> roleEntities = new ArrayList<>();
 
-    @OneToOne(fetch = EAGER)
+    @OneToOne(fetch = EAGER, cascade = CascadeType.ALL)
     private AddressEntity address;
 
-    public UserEntity(String name, String email, String password, int age, Collection<RoleEntity> roleEntities) {
+    @OneToOne(fetch = EAGER, cascade = CascadeType.ALL)
+    private PaymentEntity paymentMethod;
+
+    public UserEntity(String name, String email, String password, int age, Collection<RoleEntity> roleEntities, PaymentEntity paymentMethod) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
         this.roleEntities = roleEntities;
+        this.paymentMethod = paymentMethod;
     }
 
     public UserEntity(){
@@ -100,4 +104,11 @@ public class UserEntity {
         this.address = address;
     }
 
+    public PaymentEntity getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentEntity paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 }

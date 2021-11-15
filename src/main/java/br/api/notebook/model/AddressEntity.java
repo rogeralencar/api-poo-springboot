@@ -1,32 +1,32 @@
 package br.api.notebook.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String cep;
     private String street;
     private String district;
     private String city;
     private String state;
-    private Long idUser;
 
-
-
-    public AddressEntity() {
-    }
-
-    public AddressEntity(String cep, String street, String district, String city, String state, Long idUser) {
+    public AddressEntity(Long id, String cep, String street, String district, String city, String state) {
+        this.id = id;
         this.cep = cep;
         this.street = street;
         this.district = district;
         this.city = city;
         this.state = state;
-        this.idUser = idUser;
+    }
+
+    public AddressEntity() {
+
     }
 
     public Long getId() {
@@ -43,14 +43,6 @@ public class AddressEntity {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public Long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
     }
 
     public String getStreet() {

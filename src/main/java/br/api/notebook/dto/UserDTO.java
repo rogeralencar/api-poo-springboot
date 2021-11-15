@@ -1,22 +1,16 @@
 package br.api.notebook.dto;
 
-import br.api.notebook.model.RoleEntity;
-
-import java.util.Collection;
-
 public class UserDTO {
     private String name;
     private String email;
     private int age;
     private String cpf;
-    private Collection<RoleEntity> roles;
 
-    public UserDTO(String name, String email, int age, String cpf, Collection<RoleEntity> roles) {
+    public UserDTO(String name, String email, int age, String cpf) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.cpf = cpf;
-        this.roles = roles;
     }
 
     public UserDTO(){
@@ -53,13 +47,5 @@ public class UserDTO {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public Collection<RoleEntity> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<RoleEntity> roles) {
-        this.roles = roles;
     }
 }

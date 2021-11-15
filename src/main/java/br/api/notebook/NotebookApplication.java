@@ -22,25 +22,27 @@ public class NotebookApplication  {
         SpringApplication.run(NotebookApplication .class, args);
     }
 
+
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    CommandLineRunner run(UserService userService, RoleService roleService, NotebookService notebookService){
+    CommandLineRunner run(UserService userService, RoleService roleService, NotebookService notebookService) {
         return args -> {
             roleService.saveRole(new RoleEntity(null, "ROLE_ADMIN"));
             roleService.saveRole(new RoleEntity(null, "ROLE_USER"));
 
-            userService.saveUser(new UserEntity("Roger", "rogerd@gmail.com", "admin@1A", 18,  new ArrayList<>()));
-            userService.saveUser(new UserEntity("Roger User", "rogerU@gmail.com", "admin@1A", 18, new ArrayList<>()));
+            userService.saveUser(new UserEntity("Roger User", "rogerU@gmail.com", "admin@1A", 18, new ArrayList<>(), null));
 
-            roleService.addRoleToUser("rogerd@gmail.com", "ROLE_ADMIN");
-            roleService.addRoleToUser("rogerU@gmail.com", "ROLE_USER");
+            roleService.addRoleToUser("rogerU@gmail.com", "ROLE_ADMIN");
 
             notebookService.saveNote(new NotebookEntity("Acer", "Aspire Nitro 5", "Notebook apropriado para jogos e edições de vídeos e imagens!",
                     "8 GB", "1 TB", "Intel i7-11850HQ", 15.7f, 6.599f));
+
+            notebookService.saveNote(new NotebookEntity("Asus", "Predator 5", "Notebook apropriado para jogos e edições de vídeos e imagens!",
+                    "8 GB", "1 TB", "Intel i7-11850HQ", 15.7f, 9.599f));
         };
     }
 }

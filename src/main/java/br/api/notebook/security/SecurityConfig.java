@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -41,10 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/signup").permitAll();
-        http.authorizeRequests().antMatchers("/role/**").permitAll();
+        http.authorizeRequests().antMatchers("/address", "/address/**" ).permitAll();
         http.authorizeRequests().antMatchers("/notes", "/notes/**").permitAll();
-        http.authorizeRequests().antMatchers("/cart/**").permitAll();
+        http.authorizeRequests().antMatchers("/cart", "/cart/**").permitAll();
+        http.authorizeRequests().antMatchers("/order", "/order/**").permitAll();
+        http.authorizeRequests().antMatchers("/payment", "/payment/**").permitAll();
+        http.authorizeRequests().antMatchers("/role/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
+        http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

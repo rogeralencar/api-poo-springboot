@@ -1,49 +1,55 @@
 package br.api.notebook.model;
 
 public class AddressEntityBuilder {
+    private Long id;
     private String cep;
     private String street;
     private String district;
     private String city;
     private String state;
-    private Long idUser;
 
+    public AddressEntityBuilder withId(Long id) {
+        this.id = id;
+        return this;
+    }
 
-
-    public AddressEntityBuilder withCep (String cep){
+    public AddressEntityBuilder withCep(String cep) {
         this.cep = cep;
         return this;
     }
 
-    public AddressEntityBuilder withStreet (String street){
+    public AddressEntityBuilder withStreet(String street) {
         this.street = street;
         return this;
     }
 
-    public AddressEntityBuilder withDistrict (String district){
+    public AddressEntityBuilder withDistrict(String district) {
         this.district = district;
         return this;
     }
 
-    public AddressEntityBuilder withCity(String city){
+    public AddressEntityBuilder withCity(String city) {
         this.city = city;
         return this;
     }
 
-    public AddressEntityBuilder withState(String state){
+    public AddressEntityBuilder withState(String state) {
         this.state = state;
         return this;
     }
 
-    public AddressEntityBuilder withIdUser(Long idUser){
-        this.idUser = idUser;
-        return this;
-    }
-
-    public AddressEntity build(){
-        AddressEntity address = new AddressEntity(cep, street, district, city, state, idUser);
+    public AddressEntity build() {
+        AddressEntity address = new AddressEntity(id, cep, street, district, city, state);
 
         return address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCep() {
@@ -52,14 +58,6 @@ public class AddressEntityBuilder {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public Long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
     }
 
     public String getStreet() {

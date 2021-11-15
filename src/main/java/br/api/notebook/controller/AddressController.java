@@ -7,7 +7,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class AddressController {
@@ -18,20 +17,20 @@ public class AddressController {
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @GetMapping("/cart/address/{id}")
-    public List<AddressDTO> getAddress(@PathVariable Long id){
-        return addressService.getAddressById(id);
+    @GetMapping("/address")
+    public AddressDTO getAddress() {
+        return addressService.getByUser();
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PostMapping("/cart/address")
+    @PostMapping("/address/save")
     public AddressEntity saveAddress(@RequestBody AddressDTO address) throws IOException {
-        return addressService.saveAddress(address.getCep(), address.getIdUser());
+        return addressService.saveAddress(address.getCep());
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PutMapping("/cart/address/update")
-    public AddressEntity updateAddress(@RequestBody AddressDTO address) throws IOException {
-        return addressService.saveAddress(address.getCep(), address.getIdUser());
+    @PutMapping("/address/update")
+    public AddressEntity updateAddress(@RequestBody AddressEntity address) throws IOException {
+        return addressService.updateAddress(address);
     }
 }

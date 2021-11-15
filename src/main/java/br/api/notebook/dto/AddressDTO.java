@@ -6,7 +6,6 @@ public class AddressDTO {
     private String city;
     private String state;
     private String cep;
-    private Long idUser;
 
     public String getStreet() {
         return street;
@@ -46,13 +45,5 @@ public class AddressDTO {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public Long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
     }
 }

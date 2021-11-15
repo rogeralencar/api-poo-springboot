@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,21 +26,19 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressEntity saveAddress(String cep, Long id) throws IOException {
-        UserEntity user = userService.getUserById(id);
+    public AddressEntity saveAddress(String cep) throws IOException {
+        UserEntity user = userService.findByEmail();
         AddressEntityBuilder builder = new AddressEntityBuilder();
         AddressEntity addressEntity = builder.withCity(viaCEP.getEndereco(cep).getLocalidade())
                 .withDistrict(viaCEP.getEndereco(cep).getBairro())
                 .withState(viaCEP.getEndereco(cep).getUf())
                 .withStreet(viaCEP.getEndereco(cep).getLogradouro())
                 .withCep(cep)
-                .withIdUser(id)
                 .build();
         user.setAddress(addressEntity);
         addressRepo.save(addressEntity);
         userService.saveUser(user);
         return addressEntity;
-
     }
 
     @Override
@@ -53,15 +49,28 @@ public class AddressServiceImpl implements AddressService {
         addressDTO.setCity(addressEntity.getCity());
         addressDTO.setState(addressEntity.getState());
         addressDTO.setCep(addressEntity.getCep());
-        addressDTO.setIdUser(addressEntity.getIdUser());
         return addressDTO;
     }
 
     @Override
-    public List<AddressDTO> getAddressById(Long id) {
-        return addressRepo.findById(id)
-                .stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
+    public AddressDTO getByUser(){
+        UserEntity user = userService.findByEmail();
+        AddressEntity address = user.getAddress();
+        return convertEntityToDto(address);
+    }
+
+    @Override
+    public AddressEntity updateAddress(AddressEntity address) throws IOException {
+        UserEntity user = userService.findByEmail();
+        AddressEntity addressUser = user.getAddress();
+        AddressEntityBuilder builder = new AddressEntityBuilder();
+        AddressEntity addressEntity = builder.withId(addressUser.getId())
+                .withCity(viaCEP.getEndereco(address.getCep()).getLocalidade())
+                .withDistrict(viaCEP.getEndereco(address.getCep()).getBairro())
+                .withState(viaCEP.getEndereco(address.getCep()).getUf())
+                .withStreet(viaCEP.getEndereco(address.getCep()).getLogradouro())
+                .withCep(address.getCep())
+                .build();
+        return addressRepo.save(addressEntity);
     }
 }

@@ -1,30 +1,25 @@
 package br.api.notebook.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.InheritanceType.JOINED;
 
 @Entity
-public class RoleEntity {
+@Inheritance(strategy = JOINED)
+public abstract class PaymentEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
     private String name;
 
-    public RoleEntity(Long id, String name) {
+    public PaymentEntity(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public RoleEntity(){
+    public PaymentEntity(){
 
-    }
-
-    public RoleEntity(String name) {
-        this.name = name;
     }
 
     public Long getId() {

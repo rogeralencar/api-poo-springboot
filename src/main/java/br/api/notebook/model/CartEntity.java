@@ -2,6 +2,7 @@ package br.api.notebook.model;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -10,15 +11,10 @@ public class CartEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "notebook_id", referencedColumnName = "id")
+    @ManyToOne(fetch = EAGER)
     private NotebookEntity notebook;
-
-    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @OneToOne(fetch = EAGER)
     private UserEntity user;
-
     private Long quantity;
 
     public CartEntity(NotebookEntity notebook, UserEntity user, Long quantity) {

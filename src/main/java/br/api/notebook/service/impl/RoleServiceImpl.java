@@ -28,6 +28,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void addRoleToUser(String email, String roleName) {
         UserEntity userEntity = userRepo.findByEmail(email);
+        userEntity.getRoles().removeAll(userEntity.getRoles());
         RoleEntity roleEntity = roleRepo.findByName(roleName);
         userEntity.getRoles().add(roleEntity);
     }

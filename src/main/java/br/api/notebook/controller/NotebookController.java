@@ -16,34 +16,33 @@ public class NotebookController {
     @Autowired
     private NotebookService notebookService;
 
-
     @GetMapping("/notes")
-    public ResponseEntity<List<NotebookDTO>> getNotebooks(){
+    public ResponseEntity<List<NotebookDTO>> getNotebooks() {
         return ResponseEntity.ok().body(notebookService.getNotes());
     }
 
     @GetMapping("/notes/{id}")
-    public ResponseEntity<Optional<NotebookEntity>> getNotebooks(@PathVariable Long id){
+    public ResponseEntity<Optional<NotebookEntity>> getNotebooks(@PathVariable Long id) {
         return ResponseEntity.ok().body(notebookService.getNoteById(id));
     }
 
     @Secured({"ROLE_ADMIN"})
     @PostMapping("/note/save")
-    public ResponseEntity<String> saveNote(@RequestBody NotebookEntity noteEntity){
+    public ResponseEntity<String> saveNote(@RequestBody NotebookEntity noteEntity) {
         notebookService.saveNote(noteEntity);
         return ResponseEntity.ok().body("Notebook adicionado com sucesso.");
     }
 
     @Secured({"ROLE_ADMIN"})
     @PutMapping("/note/update")
-    public ResponseEntity<String> updateNote(@RequestBody NotebookEntity noteEntity){
+    public ResponseEntity<String> updateNote(@RequestBody NotebookEntity noteEntity) {
         notebookService.updateNote(noteEntity);
         return ResponseEntity.ok().body("Notebook atualizado com Sucesso!");
     }
 
     @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/note/delete/{id}")
-    public ResponseEntity<String> deleteNote(@PathVariable Long id){
+    public ResponseEntity<String> deleteNote(@PathVariable Long id) {
         notebookService.deleteNote(id);
         return ResponseEntity.ok().body("Notebook deletado com Sucesso!");
     }

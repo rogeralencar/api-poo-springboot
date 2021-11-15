@@ -3,6 +3,7 @@ package br.api.notebook.service.impl;
 import br.api.notebook.dto.UserDTO;
 import br.api.notebook.model.UserEntity;
 import br.api.notebook.repository.UserRepository;
+import br.api.notebook.service.RoleService;
 import br.api.notebook.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -20,7 +21,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -29,13 +29,15 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepo;
-
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final HttpServletRequest request;
 
-    public UserServiceImpl(UserRepository userRepo, PasswordEncoder passwordEncoder,
+
+    public UserServiceImpl(UserRepository userRepo, RoleService roleService, PasswordEncoder passwordEncoder,
                            HttpServletRequest request) {
         this.userRepo = userRepo;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.request = request;
     }
@@ -58,7 +60,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDTO.setEmail(userEntity.getEmail());
         userDTO.setAge(userEntity.getAge());
         userDTO.setCpf(userEntity.getCpf());
-        userDTO.setRoles(userEntity.getRoles());
         return userDTO;
     }
 
@@ -71,19 +72,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserEntity getUserById(Long id) {
-        Optional<UserEntity> userEntity = userRepo.findById(id);
-        UserEntity user = new UserEntity();
-        if(userEntity.isPresent()){
-            user = userEntity.get();
-        }
-        return user;
-    }
-
-    @Override
-    public UserEntity saveUser(UserEntity userEntity) {
+    public void saveUser(UserEntity userEntity) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        return userRepo.save(userEntity);
+        userRepo.save(userEntity);
+        roleService.addRoleToUser(userEntity.getEmail(), "ROLE_USER");
     }
 
     @Override

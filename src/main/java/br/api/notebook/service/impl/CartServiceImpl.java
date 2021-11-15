@@ -60,7 +60,7 @@ public class CartServiceImpl implements CartService {
         cartRepo.deleteById(id);
     }
 
-    public static CartDTO convertEntityToDTO(CartEntity cartEntity){
+    public CartDTO convertEntityToDTO(CartEntity cartEntity){
         CartDTO cartDTO = new CartDTO();
         cartDTO.setId(cartEntity.getId());
         cartDTO.setQuantity(cartEntity.getQuantity());
