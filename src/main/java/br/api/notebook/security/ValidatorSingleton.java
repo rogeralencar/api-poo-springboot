@@ -18,10 +18,17 @@ public class ValidatorSingleton {
 
     public ResponseEntity<String> verify(UserEntity user){
         if(!verifyEmail(user)){
-            return ResponseEntity.badRequest().body("Seu email:\\n - Deve conter @;\\n - Deve conter um domínio. Ex: .com; \\n - Não ter caracteres especiais; \\n - Não deve conter espaços.");
+            return ResponseEntity.badRequest().body("Seu email: \n" +
+                    "- Deve conter @; \n" +
+                    "- Deve conter um domínio. Ex: .com;\n" +
+                    " - Não ter caracteres especiais; \n" +
+                    "- Não deve conter espaços.");
         } else if(!verifyPassword(user)){
-            return ResponseEntity.badRequest().body("\\\"Sua senha deve: \\\\n - Conter 8 caracteres; \\\\n - Uma letra maiúscula; \\\\n\\\" +\\n\" +\n" +
-                    "                \"                    \\\" - Um caractere especial; \\\\n - E não deve conter espaços.\\\"");
+            return ResponseEntity.badRequest().body("Sua senha deve: \n" +
+                    "- Conter 8 caracteres; \n" +
+                    "- Uma letra maiúscula; \n" +
+                    "- Um caractere especial; \n" +
+                    "- E não deve conter espaços.");
         } else if(!verifyAge(user)){
             return  ResponseEntity.badRequest().body("Você precisa ter mais de 18 anos para criar uma conta.");
         } else if(!verifyCpf(user)){
